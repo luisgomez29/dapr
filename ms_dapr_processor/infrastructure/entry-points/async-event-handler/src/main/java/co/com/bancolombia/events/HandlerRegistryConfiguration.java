@@ -26,8 +26,8 @@ public class HandlerRegistryConfiguration {
         return Mono.just(cloudEvent)
                 .doOnNext(e -> log.info("Subscriber received: {}", cloudEvent.getData()))
                 .filter(e -> e.getData().getQuantity() != 3)
-                .flatMap( e -> orderUseCase.saveOrder(e.getData()))
-                .thenReturn(ResponseEntity.ok("SUCCESS"))
+                .flatMap(e -> orderUseCase.saveOrder(e.getData()))
+                .map(e -> ResponseEntity.ok("SUCCESS"))
                 .switchIfEmpty(Mono.just(ResponseEntity.internalServerError().body("ERROR")))
                 .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body(e.getMessage())));
     }
@@ -37,8 +37,8 @@ public class HandlerRegistryConfiguration {
     public Mono<ResponseEntity<String>> getCheckoutDlq(@RequestBody(required = false) CloudEvent<Order> cloudEvent) {
         return Mono.just(cloudEvent)
                 .doOnNext(e -> log.info("Subscriber DLQ received: {}", cloudEvent.getData()))
-                .flatMap( e -> orderUseCase.saveOrder(e.getData()))
-                .thenReturn(ResponseEntity.ok("SUCCESS"))
+                .flatMap(e -> orderUseCase.saveOrder(e.getData()))
+                .map(e -> ResponseEntity.ok("SUCCESS"))
                 .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body(e.getMessage())));
     }
 
