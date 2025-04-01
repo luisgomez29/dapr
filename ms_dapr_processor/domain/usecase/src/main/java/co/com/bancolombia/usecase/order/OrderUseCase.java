@@ -15,8 +15,7 @@ public class OrderUseCase {
     }
 
     public Mono<Order> saveOrder(Order order) {
-        return orderRepository.save(order)
-                .flatMap(e -> orderRepository.getOrderById(e.getId()));
+        return orderRepository.save(order);
     }
 
 }
