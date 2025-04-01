@@ -1,7 +1,5 @@
 package co.com.bancolombia.api;
 
-import co.com.bancolombia.api.handlers.ValidatorHandler;
-import co.com.bancolombia.api.mapper.OrderDTOMapper;
 import co.com.bancolombia.usecase.order.OrderUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,8 +11,6 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class Handler {
     private final OrderUseCase orderUseCase;
-    private final ValidatorHandler validatorHandler;
-    private final OrderDTOMapper mapper;
 
     public Mono<ServerResponse> getOrderById(ServerRequest serverRequest) {
         return orderUseCase.getOrder(serverRequest.pathVariable("id"))
