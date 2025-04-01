@@ -1,0 +1,37 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "ms_dapr_checkout"
+  devtools:
+    add-properties: false
+  profiles:
+    include: local
+  webflux:
+    base-path: /
+  logging:
+    level:
+      root: INFO
+      reactor:
+        netty: false
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: never
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, liveness, readiness
+      base-path: /
+      path-mapping:
+        health: health
+        liveness: liveness
+        readiness: readiness
+
+
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"

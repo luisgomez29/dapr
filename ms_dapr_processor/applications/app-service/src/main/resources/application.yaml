@@ -1,0 +1,40 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: "ms_dapr_processor"
+  devtools:
+    add-properties: false
+  profiles:
+    include: local
+  webflux:
+    base-path: /
+  logging:
+    level:
+      root: INFO
+      reactor:
+        netty: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: never
+      probes:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, liveness, readiness
+      base-path: /
+      path-mapping:
+        health: health
+        liveness: liveness
+        readiness: readiness
+
+
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"

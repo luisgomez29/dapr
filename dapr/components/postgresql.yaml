@@ -1,0 +1,33 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: orderstore
+spec:
+  type: state.postgresql
+  version: v2
+  metadata:
+    - name: connectionString
+      value: "host=localhost user=postgres password=admin port=5432 connect_timeout=10 database=dapr"
+    # Maximum number of connections pooled by this component (optional)
+    - name: maxConns
+      value: 10
+    # Max idle time for connections before they're closed (optional)
+    - name: connectionMaxIdleTime
+      value: 3m
+    # Timeout for database operations, as a Go duration or number of seconds (optional)
+    #- name: timeout
+    #  value: 20
+    # Prefix for the table where the data is stored (optional)
+    #- name: tablePrefix
+    #  value: ""
+    # Name of the table where to store metadata used by Dapr (optional)
+    #- name: metadataTableName
+    #  value: "dapr_metadata"
+    # Cleanup interval in seconds, to remove expired rows (optional)
+    #- name: cleanupInterval
+    #  value: "1h"
+    # Controls the default mode for executing queries. (optional)
+    #- name: queryExecMode
+    #  value: ""
+scopes:
+  - ms_dapr_processor

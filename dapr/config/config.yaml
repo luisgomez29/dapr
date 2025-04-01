@@ -1,0 +1,36 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: appConfig
+spec:
+  api:
+    # APIs permitidas
+    allowed:
+      - name: publish
+        version: v1.0
+        protocol: http
+      - name: secrets
+        version: v1.0
+        protocol: http
+      - name: state
+        version: v1.0
+        protocol: http
+
+  secrets:
+    scopes:
+      - storeName: aws-secrets
+        defaultAccess: deny
+        allowedSecrets:
+          - mysecret
+          - othersecret
+
+  #  mtls:
+  #    enabled: true
+  #    allowedClockSkew: 15m
+  #    workloadCertTTL: 24h
+
+  # Observability
+  tracing:
+    samplingRate: "1"
+    zipkin:
+      endpointAddress: "http://localhost:9411/api/v2/spans"

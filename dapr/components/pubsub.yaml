@@ -1,0 +1,47 @@
+# Redis: Usando secretos
+# apiVersion: dapr.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: orderpubsub
+# spec:
+#   type: pubsub.redis
+#   version: v1
+#   metadata:
+#   - name: redisHost
+#     value: "localhost:6379"
+#   - name: redisPassword
+#     secretKeyRef:
+#       name: mysecret
+#       key:  password
+
+# RabbitMQ usando secretos
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: orderpubsub
+spec:
+  type: pubsub.rabbitmq
+  version: v1
+  metadata:
+    - name: protocol
+      value: amqp
+    - name: hostname
+      secretKeyRef:
+        name: mysecret
+        key: hostname
+    - name: username
+      secretKeyRef:
+        name: mysecret
+        key: username
+    - name: password
+      secretKeyRef:
+        name: mysecret
+        key: password
+    - name: requeueInFailure
+      value: true
+    - name: enableDeadLetter
+      value: true
+    - name: durable
+      value: true  # Asegura que la cola sea duradera
+    - name: deletedWhenUnused
+      value: false  # Evita que la cola se elimine cuando no esté en uso

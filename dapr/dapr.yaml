@@ -1,0 +1,9 @@
+version: 1
+common:
+  resourcesPath: ./components/
+apps:
+  - appID: ms_dapr_processor
+    appDirPath: ../../applications/app-service/build/libs/
+    appPort: 8081
+    daprHTTPPort: 3501
+    command: ["java", "-jar", "ms_dapr_processor.jar"]
